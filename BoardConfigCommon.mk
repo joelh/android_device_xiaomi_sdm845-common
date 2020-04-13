@@ -144,12 +144,15 @@ TARGET_USES_PRE_UPLINK_FEATURES_NETMGRD := true
 VENDOR_SECURITY_PATCH := 2020-03-01
 
 # Sepolicy
-SELINUX_IGNORE_NEVERALLOWS := true
 include device/qcom/sepolicy/sepolicy.mk
 
 BOARD_PLAT_PRIVATE_SEPOLICY_DIR += $(COMMON_PATH)/sepolicy/private
 BOARD_PLAT_PUBLIC_SEPOLICY_DIR += $(COMMON_PATH)/sepolicy/public
 BOARD_SEPOLICY_DIRS += $(COMMON_PATH)/sepolicy/vendor
+
+ifneq (,$(filter userdebug eng, $(TARGET_BUILD_VARIANT)))
+SELINUX_IGNORE_NEVERALLOWS := true
+endif
 
 # SurfaceFlinger
 TARGET_USE_QCOM_SURFACEFLINGER := true
